@@ -1,6 +1,6 @@
 # MCP Gateway, Server, and Client
 
-As long as Claude Desktop does not support connecting to remote servers, you can use this script to run a bridge from stdio to HTTP SSE endpoint.
+As long as Claude Desktop does not support connecting to remote servers, you can use this script to run a bridge from stdio to HTTP SSE (Server-Sent Events) endpoint.
 
 > The bridge script is node javasscript, but your server code can be whatever you use.
 

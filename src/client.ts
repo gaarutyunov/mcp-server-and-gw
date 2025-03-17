@@ -33,23 +33,25 @@ async function main() {
   await client.connect(transport);
   console.log("Connected:", client.getServerCapabilities());
 
-  // List available resources
+  // 1. List available resources
   const resources = await client.request({ method: "resources/list" }, ListResourcesResultSchema);
   console.log(util.inspect(resources, false, 20, true));
 
   // Read a specific resource
-  const resourceContent = await client.request(
-    {
-      method: "resources/read",
-      params: {
-        uri: resources.resources[0].uri, // 1st..
+  if (Array.isArray(resources.resources) && resources.resources.length) {
+    const resourceContent = await client.request(
+      {
+        method: "resources/read",
+        params: {
+          uri: resources?.resources?.[0]?.uri, // 1st..
+        },
       },
-    },
-    ReadResourceResultSchema
-  );
-  console.log(util.inspect(resourceContent, false, 20, true));
+      ReadResourceResultSchema
+    );
+    console.log(util.inspect(resourceContent, false, 20, true));
+  }
 
-  // List available tools
+  // 2. List available tools
   const tools = await client.request({ method: "tools/list" }, ListToolsResultSchema);
   console.log(util.inspect(tools, false, 20, true));
 

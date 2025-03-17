@@ -2,6 +2,8 @@
 
 As long as Claude Desktop does not support connecting to remote servers, you can use this script to run a bridge from stdio to HTTP SSE endpoint.
 
+> The bridge script is node javasscript, but your server code can be whatever you use.
+
 A [Model Context Protocol](https://www.anthropic.com/news/model-context-protocol) gateway [src/claude_gateway.ts](src/claude_gateway.ts) from [stdio](https://spec.modelcontextprotocol.io/specification/basic/transports/#stdio) to [HTTP SSE](https://spec.modelcontextprotocol.io/specification/basic/transports/#http-with-sse) transport.
 
 ```shell

@@ -2,7 +2,6 @@
   "name": "mcp-server-and-gw",
   "version": "0.1.0",
   "description": "An MCP stdio to http sse gateway with example server and MCP client",
-  "private": true,
   "type": "module",
   "bin": {
     "claude_gateway": "./build/claude_gateway.js"
@@ -14,7 +13,10 @@
     "build": "rm -rf build && tsc",
     "prepare": "yarn run build",
     "watch": "tsc --watch",
-    "inspector": "npx @modelcontextprotocol/inspector node build/claude_gateway.js"
+    "inspector": "npx @modelcontextprotocol/inspector node build/claude_gateway.js",
+    "release:patch": "npm version patch && git push && git push --tags",
+    "release:minor": "npm version minor && git push && git push --tags",
+    "release:major": "npm version major && git push && git push --tags"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "0.6.0",

@@ -1,8 +1,24 @@
+#!/usr/bin/env node
 import EventSource from "eventsource";
 
-const MCP_HOST = process.env["MCP_HOST"] ?? "localhost";
-const MCP_PORT = process.env["MCP_PORT"] ?? 8808;
-const baseUrl = `http://${MCP_HOST}:${MCP_PORT}`;
+// Get the backend URL from command line arg or environment variables
+let baseUrl: string;
+
+if (process.argv.length > 2) {
+  baseUrl = process.argv[2];
+  if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+    baseUrl = `http://${baseUrl}`;
+  }
+  // Remove trailing slash if present
+  if (baseUrl.endsWith('/')) {
+    baseUrl = baseUrl.slice(0, -1);
+  }
+} else {
+  const MCP_HOST = process.env["MCP_HOST"] ?? "localhost";
+  const MCP_PORT = process.env["MCP_PORT"] ?? 8808;
+  baseUrl = `http://${MCP_HOST}:${MCP_PORT}`;
+}
+
 const backendUrlSse = `${baseUrl}/sse`;
 const backendUrlMsg = `${baseUrl}/message`;
 
@@ -39,9 +55,10 @@ async function processMessage(inp: Buffer) {
 }
 
 async function runBridge() {
+  debug(`-- Connecting to MCP server at ${baseUrl}`);
   await connectSSEBackend();
   process.stdin.on("data", processMessage);
-  debug("-- MCP stdio to SSE gw running");
+  debug(`-- MCP stdio to SSE gateway running - connected to ${baseUrl}`);
 }
 
 runBridge().catch((error) => {

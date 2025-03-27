@@ -2,7 +2,7 @@
 
 As long as Claude Desktop does not support connecting to remote servers, you can use this script to run a bridge from stdio to HTTP SSE (Server-Sent Events) endpoint.
 
-## Installation
+## Install claude_gateway
 
 You can install the package globally or use it directly with npx:
 
@@ -10,15 +10,6 @@ You can install the package globally or use it directly with npx:
 # Global installation
 npm install -g mcp-server-and-gw
 
-# Or install as a project dependency
-npm install mcp-server-and-gw
-```
-
-## Usage
-
-You can use the gateway in several ways:
-
-```shell
 # Using npx (no installation required)
 npx claude_gateway http://localhost:9999
 
@@ -28,6 +19,8 @@ claude_gateway http://localhost:9999
 # Using environment variables
 MCP_HOST=localhost MCP_PORT=9999 npx claude_gateway
 ```
+
+## Add Configuration into Claude
 
 > The bridge script is node javasscript, but your server code can be whatever you use.
 
@@ -44,9 +37,9 @@ cp build/claude_gateway.js /tmp
 echo '{
   "mcpServers": {
     "Claude Gateway Example": {
-      "command": "node",
+      "command": "npx",
       "args": [
-        "/tmp/claude_gateway.js"
+        "claude_gateway", "http://localhost:9999/"
       ]
     }
   }
@@ -130,39 +123,3 @@ Connected: { resources: {}, tools: {}, templates: {} }
   isError: false
 }
 ```
-
-## Publishing New Versions
-
-This package uses GitHub Actions to automatically publish to NPM when a new release is created.
-
-### For Maintainers
-
-To release a new version:
-
-1. Make your changes and commit them
-2. Run one of the release commands:
-   ```shell
-   # For patch releases (bug fixes)
-   npm run release:patch
-   
-   # For minor releases (backward compatible features)
-   npm run release:minor
-   
-   # For major releases (breaking changes)
-   npm run release:major
-   ```
-3. This will:
-   - Update the version in package.json
-   - Create a git tag for the version
-   - Push the changes and tags to GitHub
-   
-4. Go to GitHub and create a new release from the tag
-   - This will trigger the GitHub Action to publish to NPM
-
-### NPM Token Setup
-
-To set up automatic publishing:
-
-1. Create an NPM token with publish permissions
-2. Add the token to your GitHub repository secrets with the name `NPM_TOKEN`
-3. The publishing workflow will use this token to authenticate with NPM

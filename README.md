@@ -7,14 +7,11 @@ As long as Claude Desktop does not support connecting to remote servers, you can
 You can install the package globally or use it directly with npx:
 
 ```shell
-# Global installation
+# install
 npm install -g mcp-server-and-gw
 
-# Using npx (no installation required)
+# Run with npx
 npx claude_gateway http://localhost:8808/
-
-# If installed globally
-claude_gateway http://localhost:8808/
 
 # Using environment variables
 MCP_HOST=localhost MCP_PORT=8808 npx claude_gateway

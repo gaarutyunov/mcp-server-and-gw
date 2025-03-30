@@ -11,13 +11,13 @@ You can install the package globally or use it directly with npx:
 npm install -g mcp-server-and-gw
 
 # Using npx (no installation required)
-npx claude_gateway http://localhost:9999
+npx claude_gateway http://localhost:8808/
 
 # If installed globally
-claude_gateway http://localhost:9999
+claude_gateway http://localhost:8808/
 
 # Using environment variables
-MCP_HOST=localhost MCP_PORT=9999 npx claude_gateway
+MCP_HOST=localhost MCP_PORT=8808 npx claude_gateway
 ```
 
 ## Add Configuration into Claude
@@ -38,26 +38,30 @@ echo '{
     "Claude Gateway Example": {
       "command": "/opt/homebrew/bin/npx",
       "args": [
-        "claude_gateway", "http://localhost:9999/"
+        "claude_gateway", "http://localhost:8808/"
       ]
     }
   }
 }' > ~/Library/Application\ Support/Claude/claude_desktop_config.json
 
 ## 3. Start server so that claude can connect to it for discoverying its resources, tools, etc.
-node build/server.js
+PORT=8808 node examples/server.js
 
 ## 4. Start Claude Desktop
 ```
 
 ## Example Server and Client
 
+```shell
+yarn install @types/express @types/json-bigint @types/node duckdb express json-bigint
+```
+
 You can also develop the SSE server independently from Claude Desktop so you get faster iterations. For example, run the `src/server.ts` and use the `src/client.ts` as the client.
 
 Start server, once you start the client on another terminal, you see the server output.
 
 ```shell
-% node build/server.js
+% node examples/server.js
 Server is running on port 8808
 
 --> Received connection: /sse
@@ -96,7 +100,7 @@ New SSE connection.
 Start the client
 
 ```shell
-% node build/client.js
+% node examples/client.js
 Connecting...
 Connected: { resources: {}, tools: {}, templates: {} }
 { resources: [] }

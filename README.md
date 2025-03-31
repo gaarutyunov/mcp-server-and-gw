@@ -45,10 +45,6 @@ PORT=8808 node examples/server.js
 
 ## Example Server and Client
 
-```shell
-yarn install @types/express @types/json-bigint @types/node duckdb express json-bigint
-```
-
 You can also develop the SSE server independently from Claude Desktop so you get faster iterations. For example, run the `src/server.ts` and use the `src/client.ts` as the client.
 
 Start server, once you start the client on another terminal, you see the server output.
@@ -118,4 +114,18 @@ Connected: { resources: {}, tools: {}, templates: {} }
   content: [ { type: 'text', text: '[\n  {\n    "42": 42\n  }\n]' } ],
   isError: false
 }
+```
+
+## Testing with MCP Inspector
+
+Start the example server on one terminal
+
+```shell
+node examples/server.js
+```
+
+...and the gateway on another terminal
+
+```shell
+npx @modelcontextprotocol/inspector node ./build/mcp-server-and-gw.js
 ```

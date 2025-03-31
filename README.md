@@ -2,26 +2,22 @@
 
 As long as Claude Desktop does not support connecting to remote servers, you can use this script to run a bridge from stdio to HTTP SSE (Server-Sent Events) endpoint.
 
-## Install claude_gateway
-
-You can install the package globally or use it directly with npx:
+## Install mcp-server-and-gw
 
 ```shell
-# install
+# 1. install
 npm install -g mcp-server-and-gw
-
-# Run with npx
-npx claude_gateway http://localhost:8808/
-
-# Using environment variables
-MCP_HOST=localhost MCP_PORT=8808 npx claude_gateway
+# 2. Or run directly with npx
+npx mcp-server-and-gw http://localhost:8808/
+# ...you can use environment variables too
+MCP_HOST=localhost MCP_PORT=8808 npx mcp-server-and-gw
 ```
 
 ## Add Configuration into Claude
 
 > The bridge script is node javasscript, but your server code can be whatever you use.
 
-A [Model Context Protocol](https://www.anthropic.com/news/model-context-protocol) gateway [src/claude_gateway.ts](src/claude_gateway.ts) from [stdio](https://spec.modelcontextprotocol.io/specification/basic/transports/#stdio) to [HTTP SSE](https://spec.modelcontextprotocol.io/specification/basic/transports/#http-with-sse) transport.
+A [Model Context Protocol](https://www.anthropic.com/news/model-context-protocol) gateway [src/mcp-server-and-gw.ts](src/mcp-server-and-gw.ts) from [stdio](https://spec.modelcontextprotocol.io/specification/basic/transports/#stdio) to [HTTP SSE](https://spec.modelcontextprotocol.io/specification/basic/transports/#http-with-sse) transport.
 
 ```shell
 ## 1. Build
@@ -29,13 +25,13 @@ yarn install
 yarn build
 
 ## 2. Copy the code or update the claude_desktop_config.json
-##    NOTE: Ensure that npx is in the PATH, os use full path.
+##    NOTE: Ensure that npx is in the PATH, or use full path like /opt/homebrew/bin/npx
 echo '{
   "mcpServers": {
     "Claude Gateway Example": {
-      "command": "/opt/homebrew/bin/npx",
+      "command": "npx",
       "args": [
-        "claude_gateway", "http://localhost:8808/"
+        "mcp-server-and-gw", "http://localhost:8808/"
       ]
     }
   }

@@ -73,8 +73,7 @@ function connectSSEBackend() {
     source.addEventListener("endpoint", (e) => {
       // Extract base URL without path and query parameters
       const urlObj = new URL(baseUrl);
-      const baseWithoutPath = `${urlObj.protocol}//${urlObj.host}`;
-      backendUrlMsg = `${baseWithoutPath}${e.data}`;
+      backendUrlMsg = e.data;
       debug(`--- SSE backend sent "endpoint" event (${e.data}) ==> Setting message endpoint URL: "${backendUrlMsg}"`);
       connected = true;
       resolve(clearTimeout(timer));
